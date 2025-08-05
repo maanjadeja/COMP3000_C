@@ -1,0 +1,29 @@
+*** 3000memview_original.c      2023-01-30 17:37:03.620000000 -0500
+--- 3000memview_modified.c      2023-01-30 17:41:24.980000000 -0500
+***************
+*** 1,7 ****
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <unistd.h>
+!
+  char *gmsg = "Global Message";
+
+  const int buffer_size = 100;
+--- 1,7 ----
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <unistd.h>
+! #include <malloc.h>
+  char *gmsg = "Global Message";
+
+  const int buffer_size = 100;
+***************
+*** 28,33 ****
+--- 28,34 ----
+          printf("sbrk(0):   %lx\n", (unsigned long) sbrk(0));
+          printf("&buf:      %lx\n", (unsigned long) &buf);
+
++       mallopt(M_MMAP_THRESHOLD, 200*1024);
+          for (i = 0; i<buffer_size; i++) {
+                  buf[i] = (char *) malloc(4096);
+          }

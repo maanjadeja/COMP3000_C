@@ -1,0 +1,62 @@
+COMP 3000 
+Assignment 1 
+Maansinh Jadeja
+101157121
+Jan 31st 2023
+
+
+PART 1
+Q.1 https://www.petefreitag.com/item/877.cfm#:~:text=The%20sudo%20has%20a%20handy,variables%20into%20the%20sudo%20environment.&text=Note%2C%20we%20are%20using%20the,echo's%20all%20the%20environment%20variables.
+
+
+    The reason why we are unable to view the varible MYVAR is because with the sudo command we temporarily shift
+    to the role of the root user or another user if specified. The MYVAR variable can only be viewed by the user
+    that is present currently logged in to the directory. This is why when we try to execute a sudo command we are
+    prompted with a log in before the command executes. In order to see the MYVAR variable with the sudo command
+    we have to input the command "sudo -E env" command as the -E argument allows us to pass in all the variables
+    that we have set in our current environment to the sudo environment.
+
+Q.2 The roles of the user/kernel mode and root/non-root modes are such that each mode have their own set of 
+    commands that they can execute. When we input the keyword sudo, it tells the operating system to take the role
+    of the root, any command that is inputted with sudo at the front without any arguments are executed, with
+    the root as the current environment.
+
+Q.3 The reason why "sudo echo $MYVAR" works is because, with the sudo command we are specifying the variable that
+    we are looking for by name, whereas in question 1 we are trying to shift the variables from the student user to
+    the root with the -E arguement. In question 1 we were trying to view the variable using the env command, 
+    however, the env command only shows details on variable that are declared in the current user.
+
+Q.4 The reason why we cannot execute "sudo export MYVAR=99", is because the sudo command takes in commands that 
+    only the root can execute, in the root we are unable to declare variables, which is why we are supposed to 
+    shift the variables from the student user into the root.
+
+PART 2
+Q.5
+(A) We can use M_MMAP_THRESHOLD, the manual specifies we can use mmap(2) instead of sbrk(2), here we can specify 
+    the number of bytes we would like to allocate along with the parameter in mallopt. We can also use 
+    M_TRIM_THRESHOLD, this command allows us to release any extra memory that has been allocated in the heap that 
+    is not in use. This command uses free(3) which calls the sbrk(2) system call to cut down the amount of memory, 
+    what this command does, is that it checks the minimum number of bytes an allocation must be of, before the 
+    sbrk(2) cuts down the memory.
+
+(B) To change the value to 200KiB, we can use the command: int mallopt(M_MMAP_THRESHOLD, 200000).
+(C) 
+
+https://www.google.com/search?q=relation+between+kernel+and+root&rlz=1C1CHBD_enCA919CA919&ei=9hXYY8yGBr2nptQPypawiA4&ved=0ahUKEwjM2emo_-_8AhW9k4kEHUoLDOEQ4dUDCBA&uact=5&oq=relation+between+kernel+and+root&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIGCAAQFhAeMgUIABCGAzIFCAAQhgMyBQgAEIYDMgUIABCGAzoKCAAQRxDWBBCwAzoFCAAQkQI6EQguEIMBEMcBELEDENEDEIAEOg4ILhCABBCxAxCDARDUAjoLCC4QgAQQsQMQgwE6DgguEIAEELEDEMcBENEDOggIABCxAxCDAToFCAAQgAQ6EQguEIAEELEDEIMBEMcBENEDOgsIABCABBCxAxCDAToECAAQQzoICAAQgAQQsQM6BQguEIAEOg0IABCABBCxAxCDARAKOgcIABCxAxBDOgoIABCxAxCDARBDOgoIABCABBBGEPkBOgcILhCABBAKOggIABAWEB4QCjoICAAQFhAeEA9KBAhBGABKBAhGGABQ6gVYyylg_TJoBHAAeACAAaEBiAG0FpIBBDI2LjeYAQCgAQHIAQjAAQE&sclient=gws-wiz-serp
+https://man7.org/linux/man-pages/man3/mallopt.3.html
+https://www.qnx.com/developers/docs/6.5.0SP1.update/com.qnx.doc.neutrino_lib_ref/m/mallopt.html
+
+
+PART 3
+Q.6
+(A) syscall2-hello.c, syscall-hello.c, hello.c
+(B) The reason why I put the programs in that order is because, syscall2-hello.c calls for particular types of 
+    system calls as given by the libraries included at the top: #include <asm/unistd.h>, #include <sys/types.h>.
+    The second program syscall-hello.c only uses the generic syscall() function to run the program, and finally 
+    the hello.c program uses stdio.h which is the standard input output library which should make it the most 
+    portable.
+
+Q.7 Both programs are different because in syscall2-hello.c we are specifying the details of syscall using 
+    sys/types.h library. In the syscall-hello.c program we are just using the syscall function to send the
+    command to execute printing Hello World.
+
