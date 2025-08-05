@@ -1,0 +1,213 @@
+COMP 3000 
+Tutorial 1 
+Maansinh Jadeja
+101157121
+Jan 20th 2023
+
+Q.1 https://www.tecmint.com/check-linux-os-version/#:~:text=The%20best%20way%20to%20determine,on%20almost%20all%20Linux%20systems.
+    https://www.google.com/search?q=how+to+find+ram+in+lixu&rlz=1C1CHBD_enCA919CA919&oq=how+to+find+ram+in+lixu&aqs=chrome..69i57.2619j0j4&sourceid=chrome&ie=UTF-8
+    https://www.google.com/search?q=what+is+the+command+to+check+disk+space+in+linux&rlz=1C1CHBD_enCA919CA919&ei=FM_JY4SECN_cptQPr_K8uAk&oq=what+command+gdisk+space+in+linux&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAxgAMgUIABCiBDIFCAAQogQyBQgAEKIEMgUIABCiBDoKCAAQRxDWBBCwAzoGCAAQBxAeOgQIABBDOgcIABCABBANOggIABAIEAcQHjoGCAAQHhANOggIABAFEAcQHjoICAAQCBAeEA06BQgAEIYDOgYIABAIEB5KBAhBGABKBAhGGABQ6RBYpiVghjBoAXABeAGAAbQBiAHAD5IBBDUuMTKYAQCgAQHIAQjAAQE&sclient=gws-wiz-serp
+    https://www.linuxfoundation.org/blog/blog/classic-sysadmin-how-to-check-disk-space-on-linux-from-the-command-line#:~:text=That%20command%20is%20df%20%2DH,your%20system%20(Figure%201).
+    https://www.google.ca/search?q=how+to+find+name+%28binary+path%29+of+current+shell+in+linux&source=hp&ei=MtLJY6WeJ4m5qtsPs4uo6AE&iflsig=AK50M_UAAAAAY8ngQu4tRSSfMqug_6tNkRBMYYEMZPzW&ved=0ahUKEwil__Tc5NT8AhWJnGoFHbMFCh0Q4dUDCAo&uact=5&oq=how+to+find+name+%28binary+path%29+of+current+shell+in+linux&gs_lcp=Cgdnd3Mtd2l6EAMyBwghEKABEAo6CwgAEIAEELEDEIMBOhEILhCABBCxAxCDARDHARDRAzoOCC4QgAQQsQMQxwEQ0QM6CAgAELEDEIMBOggILhCxAxCDAToLCC4QgAQQsQMQgwE6CAguEIAEELEDOggIABCABBCxAzoFCAAQgAQ6BQguELEDOgUIABCxAzoFCC4QgAQ6CAguEIAEENQCOgYIABAWEB46BwgAEIAEEA06BQgAEIYDOgUIIRCgAToICCEQFhAeEB06CgghEBYQHhAPEB06CwghEBYQHhDxBBAdUABY6lpgyltoBHAAeAGAAa8BiAGQM5IBBTI1LjM3mAEAoAEB&sclient=gws-wiz
+
+ 
+    Linux distribution command : cat /etc/os-release
+	
+    Linux kernel version: uname -or OR uname -r  
+	->Here o prints the operating systems name
+	->Here r prints the kernel release version
+    RAM (remaining/total): htop command
+	->To find all details: grep Mem /proc/meminfo
+	->To find total available memory: grep MemTotal /proc/meminfo
+	->To find memTotal: grepMemTotal /proc/meminfo
+	->To find memFree: grepMemFree /proc/meminfo
+	->To find memAvailable: grepMemAvailable /proc/meminfo
+    Disk space(remaining/total):df -H
+	->All details we can ask for with --output:
+		+source = the file system source
+		+size = total number of blocks
+		+used = space used on a drive
+		+avail = space available on a drive
+		+pcent = percentage of used space, divided by total size
+		+target = mount point of a drive
+	->To find all details: df -H
+	->To find remaining disk space: df -H --output=source,avail
+	->Disk usage command: du
+	
+    CPU: cat /proc/cpuinfo, is the command that presents all the CPU info
+    Name of Current Shell: cat /proc/$$/cmdline
+    Path to the Current Shell: readlink /proc/$$/exe
+
+	To check version of distribution: lsb_release -a
+	To check the space/capacity of disk: lsblk ->gives disk space of 
+
+Q.2
+    https://phoenixnap.com/kb/which-command-linux#:~:text=The%20which%20command%20allows%20users,file%20matching%20the%20given%20command.
+
+    man which: this command returns the filepath to a command specified as an argument.	We can also use the 
+	       -a option (which -a __) in order to list all matches it finds.
+
+	ex. which cat->gives the location of the cat command 
+    man pwd: pwd command returns the path to the current working directory. The -L option (pwd -L) returns the
+             filepath to the current working directory as long as the path does not contain the filenames "."
+             "..", if the filepath does contain "." or "..", the pwd -L command shifts to pwd -P. pwd -P does not
+             contain filenames that refer to a symbolic link.
+ 
+    man who: who command prints who is currently logged into the operating system.
+	     who -a: 	prints all the users the system
+	     who -b: 	prints the time of the last system boot
+	     who -d: 	prints all the dead processes in the system
+	     who -H: 	prints the line of the column headings with name, line, time and comment as headings
+	     who --ips: prints the the ips instead of the hostnames, and we can use the --lookup command to search 
+			with the stored IP instead of the stored hostname.
+	     who -l: 	prints the systems login process
+
+    man whoami: whoami command prints the username associated with the current effective user ID.
+		whoami --help: gives brief information of the whoami command
+		whoami --version: gives information on whoami publication
+
+    man whereis: whereis command locates the binary, source and manual files of a given command names. 
+		 Ex. whereis cat
+		 whereis -b: 	    searches only the binary files of the command
+		 whereis -B <dirs>: gives the binaries lookup path
+		 whereis -m:        search only for manuals and infos
+		 whereis -M <dirs>: gives the manuals and infos lookup path
+		 whereis -s: 	    search only for sources of the command
+	 	 whereis -S <dirs>: gives the sources lookup path of the command
+	 	 whereis -f:	    terminate <dirs> argument list
+		 whereis -u: 	    check for any unusual entries
+		 whereis -l:	    prints out the effective lookup paths 
+	
+		 whereis -h: 	    displays help
+		 whereis -V:        displays version the whereis command is from
+
+    man whatis: whatis command gives one-line manual page descriptions
+		Ex. whatis cat prints out: - concatenate files and print on the standard output
+		whatis -d:	prints out the debugging information 
+		whatis: -v:	prints out the verbose warning messages
+
+	
+
+	
+Q.3	
+    To check if a command is built in or not, we have to enter the keyword "type" before the command. If the 
+    command is built-in, the shell will say that it "is a shell builtin". 
+    Ex type cd outputs: cd is a shell builtin.
+    If the command is external, it presents the filpath of the command from where it was executed.
+    Ex. type rm ouputs: rm is /usr/bin/rm.
+
+    If we tried to run the we compiled with just hello, it would not execute, as we need to use ./ in order to
+    specify that we are looking to execute the file in the current directory.
+
+    External Commands:
+	(1) rm command is located at: /usr/bin/rm
+	(2) mdir command is located at: /usr/bin/mkdir
+	(3) cp command is located at: /usr/bin/cp
+     
+	
+	->./hello: . represents the current directory, to see if it is internal or external 
+	-> if you give it the pathname it will be external
+
+Q.4 
+    https://www.digitalocean.com/community/tutorials/how-to-view-and-update-the-linux-path-environment-variable
+    https://phoenixnap.com/kb/linux-add-to-path
+
+    To view the PATH variable we input "echo $PATH".
+
+    To add a directory to the PATH variable, we can add it to the start or the end.
+    To add the diretory at the start of the PATH variable we input: "export PATH=/the/file/path:$PATH".
+    To add the directory at the end of the PATH variable we input:  "export PATH=$PATH:/the/file/path".
+    To add multiple directories to the PATH variable we input: "export PATH=$PATH:/the/file/path:/the/file/path2".
+
+    In order to permanently add a directory to the PATH variable, we have to use the "~/.bashrc" command if we are
+    using a bash shell, or "~/.zshrc" if we are using a zsh shell. 
+  
+    To open the "~/.bashrc" file we input "nano ~/.bashrc". To exit the file we type "ctrl+x". 
+    To permanently add a directory to the PATH variable we have to open the "~/.bashrc" file, and go to the bottom
+    of the file using the down arrow key. We then add a comment like: "# Adding current directory to PATH variable".
+    We then permanently add the command using: "export PATH=/the/file/path:$PATH", or 
+    "export PATH=$PATH:/the/file/path", depending on whether we want to add the path at the beginning or end. At
+    the end we make sure to save the file before exiting. To check if the directory has been sucessfully added,
+    we then run: "echo $PATH" and check if it is present.
+
+
+    To add it to the environment permanently, we search for the files we could use and run them everytime we compile 
+    the program.
+ 
+    ex. scs-backup was defined from
+
+Q.5
+    https://phoenixnap.com/kb/linux-file-permissions
+
+    To find the permissions of a file, we have to input the command "ls -la".
+    Ex. "ls -la /usr/bin/rm" displays:-rwxr-xr-x 1 root root 59904 Feb  7  2022 /usr/bin/rm. Here the first "root"
+    represents the owner of the command, and the second "root" represents the group of the command.
+    
+    The owners and and groups of the previous external commands: rm, mkdir, cp.
+	(1)rm - Owner: root
+                Group: root
+	(2)mkdir - Owner: root
+		   Group: root
+	(3)cp - Owner: root
+		Group: root
+
+Q.6
+    The "chmod" command allows us to change the file mode bits. This command has 2 sections:
+	chmod -r - Read mode
+	chmod -w - Write mode 
+
+    There is also a combination of letters: ugoa, that allows which users will be allowed to access the particular
+    file. Here:
+		u - represents the user who owns the file
+		g - represents other users in the files group
+		o - represents other users who are NOT in the files group
+		a - represents ALL users
+
+    If none of the above letters are specified, the default is selected as "a". We can also use "+" causes the 
+    selected file's mode bits to be added to existing file mode bits. The "-" cause the selected file's mode bits
+    to be removed from the existing file's mode bits. The "=" causes the selected file's mode bits to be added to
+    the existing file's mode bits, but any unmentioned bits are removed excluding the set user and group ID's.	
+
+    To get the permissions of a file we need to input: "stat filename".
+    Ex. stat /usr/bin/cp
+	
+	
+
+
+
+Q.7
+    https://www.ibm.com/docs/bg/aix/7.2?topic=passwords-using-etcpasswd-file
+    https://www.techtarget.com/searchsecurity/definition/shadow-password-file#:~:text=A%20shadow%20password%20file%2C%20also,from%20breaking%20into%20the%20system.
+
+
+    /etc/passwd - Owner: root
+		  Group: root
+    /etc/shadow - Owner: root
+                  Group: shadow 
+   
+    /etc/passwd is used to store the user account information for every user that has access to the system, 
+    and /etc/shadow is used to store the hash passwords (encrypted user passwords). The professor explained this 
+    in class.
+
+    This is connected to authentication. The first file passwd stores user account information, the 2nd shadow 
+    stores hash passwords. 
+
+Q.8
+    http://web.mit.edu/sipb/doc/working/afs/html/subsection3.1.html#:~:text=execute%20(x),access%20any%20of%20its%20files.
+
+    For programs, execute permission means we are allowed to execute or run them. For directories, execute 
+    permission means we are allowed to access the directory and access the files stored within it.
+
+Q.9
+    To get permission bits of a file we need to input "ls -la" followed by the directory filepath if it is located
+    somewhere else, otherwise we can simply run "ls -la" to look at the bits of the current directory. We use the 
+    "ls -a" command to view all the files including hidden files within a directory without ignoring entries 
+    starting with ".". To make a file hidden we have to start the filename with a "." as simply using the command
+    "ls", we just get files that do not begin with ".".
+
+Q.10 
+     (1)Bash allows you to use arrow keys to go up and down from previous commands you put in. 
+     (2)In bash the Tab key allows you to complete the filename you are trying to type. 
+     (3)Bash has: username @ hotname : time , at the command line. csimpleshell just gives the $ sign, and we can't 
+        use tab, arrow keys.etc csimpleshell is just a simple terminal and we dont have functionality as we have 
+        in bash. 

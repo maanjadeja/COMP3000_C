@@ -1,0 +1,113 @@
+COMP 3000 
+Tutorial 2 
+Maansinh Jadeja
+101157121
+Jan 27th 2023
+
+PART A
+Q.1 As discussed in the first week lectures, each process has its own unique id. The column on the left with 
+    entries such as .LFB23, seem to be identifiers to each process that is in the program.
+Q.2 It is supposed to call the printf() function from the .LC0 section.
+Q.3 The main function has a lot more calling in the syscall-hello.s file than the hello.s file
+Q.4 The nm command generates a table with a binary file as an argument, the tables seperates different parts of 
+    the program such as the functions.
+	Ex. If we input the command: nm hello.o, we get the output:
+		0000000000000000 r .LC0
+		000000000000000d r .LC1
+		0000000000000000 T main
+                		 U puts
+
+PART B
+Q.1 The file hello.dynamic (16064) is smaller than hello.static (900312). As described in the questions all the 
+    externel libraries dependencies are placed into the executable file, whereas, in hello.dynamic, the executable
+    calls for external runtime library dependencies before creating the executable.
+
+Q.2 The file hello.dynamic and syscall-hello.dynamic generate the most system calls, however, 
+    syscall-hello.dynamic is the largest file. As described previously the dynamic files call for the external 
+    libraries before creating the executable, whereas the static files add the libraries to the executable. This 
+    is why the static files are larger than the dynamic files.
+
+Q.3 The .log file generated from syscall-hello.dynamic seems to be using more system calls, as neither the 
+    "hello.static" or "syscall-hello.static" file generate any details in the log files. The hello.dynamic file
+     only has a "puts()" call but the syscall-hello.dynamic, has a syscall entry in the log file. The reason why
+    the syscall-hello.dynamic file generates more entry as in the code it is calling for syscall() in the result
+    variable whereas, the hello.c file only uses printf().
+
+Q.4 There are not library calls in the hello.c file used in Tutorial 1. There is only "+++ exited (status 0) +++",
+    however in hello.dynamic, we have "puts("Hello world!")      = 13" and "+++ exited (status 0) +++". This shows
+    that when we used the "-z lazy", we added an external library call when compiling the program, however, for the
+    regular "hello.c", we did not add any external library calls when compiling it normally using "gcc -O2 -o".
+
+Q.5 The dynamic versions recieve the following outputs: 
+    ldd hello.dynamic:
+	linux-vdso.so.1 (0x00007ffc5c9bd000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fbd7ec75000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007fbd7eeaf000)
+	
+    ldd hello.static: 
+	not a dynamic executable
+
+    ldd syscall-hello.dynamic:
+	linux-vdso.so.1 (0x00007ffcd43ea000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fab816ff000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007fab81939000)
+
+    ldd syscall-hello.static:
+	not a dynamic executable
+
+    The reason why the .static executables do not have any entries is because, as explained, only the dynamic 
+    executables get dynamic library dependencies. 
+
+PART C
+Q.1 When the program is referring to argv[], it is reffering to the entry that we put into the command prompt,
+    when preparing to execute the file: ./3000memview. This is why the early entries in argv and envp are similiar
+    to one another because they are taken from the command prompt. The lmsg has different entries, as when we input
+    "&" before a variable name we are asking for its address whereas if print the pointer variable directly we get
+    a different number as it is pointing to the data it's holding address. The gmsg variable also has the same 
+    situation, however because it is located outside the main function, it holds a different memory address than
+    the lmsg. All the variable addresses are inconsistent because they are located at different places in the 
+    program, and they are holding different types of values. This is why they all have varying addresses.
+
+Q.2 The stack is used to keep track of where the variables, functions calls, return values are placed so the 
+    program flow is is not messed up. The program code is located at the top of the address space, the heap
+    where all the dynamic memory is stored is stored below the program code. As we go lower, the stack it grows
+    negatively, so first the global variables will be located and then at the bottom the local variables, return
+    values.etc
+
+Q.3 The initial call ebfore 128K was:     
+	Memory report
+	argv:      7ffe35056a88
+	argv[0]:   7ffe3505870f
+	envp:      7ffe35056a98
+	envp[0]:   7ffe3505871d
+	lmsg:      55d6952d1004
+	&lmsg:     7ffe35056940
+	gmsg:      55d6952d10e0
+	&gmsg:     55d6952d3010
+	main:      55d6952d00e0
+	sbrk(0):   55d696abc000
+	&buf:      7ffe35056620
+	buf[0]:    55d696a9b6b0
+	sbrk(0):   55d696b1f000
+
+     After the 128k change the memory report is: 
+	Memory report
+	argv:      7ffcdfb12298
+	argv[0]:   7ffcdfb1270f
+	envp:      7ffcdfb122a8
+	envp[0]:   7ffcdfb1271d
+	lmsg:      562316e10004
+	&lmsg:     7ffcdfb12150
+	gmsg:      562316e100e0
+	&gmsg:     562316e12010
+	main:      562316e0f0e0
+	sbrk(0):   562317fad000
+	&buf:      7ffcdfb11e30
+	buf[0]:    562317f8c6b0
+	sbrk(0):   562318bee000
+	
+    The difference between the previous sbrk values and the new values is, that the address spaces have increased
+    in the numbers initially they would start with "55", but the new addresses start with "56231". The reason why
+    the address spaces change because the size of memory has increased to 128 500, then this requires more system
+    calls to allocate that much space for the variables.
+   

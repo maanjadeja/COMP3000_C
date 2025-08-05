@@ -1,0 +1,120 @@
+COMP 3000 
+Tutorial 3 
+Maansinh Jadeja
+101157121
+Feb 3rd 2023
+
+Q.1 Code was downloaded and compiled in the directory.
+
+Q.2 In the new program it specifies the user name in the terminal "student". In the csimpleshell program, it shows
+    us the process id of when the process is running and completed, but in the new program it does not show that.
+    According to the code of the 3000shell.c program, there are a lot more functions to deal with execution, the 
+    list of arguments.etc
+
+Q.3 We would have to input the command, and while the command runs, we type in ctrl+z, so we suspend the process
+    for a moment, after the command line returns, we input bg, to resume the process in the background.
+
+Q.4 When we try an run csimpleshell in the background with the command: ./csimpleshell bg, it shows that the output
+    "Waiting for child (2848416)", and when we run ps, to see all the current processes, it shows the same output
+    above the list and that "Child (2848425) finished" below the list. Once we hit exit for csimpleshell it 
+    shows: "Child (2848416) finished", and prompts to input another command. The program 3000shell does not show 
+    these details.
+
+Q.5 You can call the exit command to end any process that is running in the background, then after the command is 
+    finished executing we can run any command we would like after.
+
+Q.6 We can use the > symbol to redirect the output to a file by specifying the filename after the > symbol. For
+    example we can use: cat 3000shell.c > filename, where filename is where the output is going to be redirected 
+    to.
+
+Q.7 We can add a signal handelr in the void signal_handler funciton to print out "Ouch!".
+
+	void signal_handler(int the_signal)
+{
+        int pid, status;
+
+        if (the_signal == SIGHUP) {
+                fprintf(stderr, "Received SIGHUP.\n");
+                return;
+        }
+	if (the_signale == SIGUSR1 ){
+		fprintf(stderr, "Ouch!\n");
+                return;
+	
+	}
+
+        if (the_signal != SIGCHLD) {
+                fprintf(stderr, "Child handler called for signal %d?!\n",
+                        the_signal);
+                return;
+        }
+
+        pid = wait(&status);
+
+        if (pid == -1) {
+                /* nothing to wait for */
+                return;
+        }
+
+        if (WIFEXITED(status)) {
+                fprintf(stderr, "\nProcess %d exited with status %d.\n",
+                        pid, WEXITSTATUS(status));
+        } else {
+                fprintf(stderr, "\nProcess %d aborted.\n", pid);
+        }
+}
+
+Q.8 The program does not have any changes, however, the line does set the sa_flags for the signal handler to 
+    SA_RESTART; so if we command that out, the sa_flags would be holding a NULL value and may potentially not 
+    obstruct in the program flow when sending signals to the signal_handler function.
+
+Q.9 There seems to be no difference as the number of arguments needed to be changed given that the getenv() 
+    function only takes in 1 argument, so we sent in the strings: "USER" and "PATH", but they seemed to have no 
+    effect on the program flow of 3000shell.
+
+Q.10 We would have to change the plist() function such that it only works with the parent process of variable e.
+     We can also change comm to only loop till n-1, so it does not get the child but it gets the details of the 
+     parent process.
+	void plist()
+{
+        DIR *proc;
+        struct dirent *e;
+        int result;
+        char comm[COMM_SIZE];  /* seems to just need 16 */
+        char comm_fn[512];
+        int fd, i, n;
+
+        proc = opendir(proc_prefix);
+
+        if (proc == NULL) {
+                fprintf(stderr, "ERROR: Couldn't open /proc.\n");
+        }
+
+        for (e = readdir(proc); e != NULL; e = readdir(proc)) {
+                if (isdigit(e->d_name[0])) {
+                        setup_comm_fn(e->d_name, comm_fn);
+                        fd = open(comm_fn, O_RDONLY);
+                        if (fd > -1) {
+                                n = read(fd, comm, COMM_SIZE);
+                                close(fd);
+                                for (i=0; i < n-1; i++) {
+                                        if (comm[i] == '\n') {
+                                                comm[i] = '\0';
+                                                break;
+                                        }
+                                }
+                                printf("%s: %s\n", e->d_name, comm);
+                        } else {
+                                printf("%s\n", e->d_name);
+                        }
+                }
+        }
+
+        result = closedir(proc);
+        if (result) {
+                fprintf(stderr, "ERROR: Couldn't close /proc.\n");
+        }
+} 
+ 
+Q.11 To suspend any stop a process and send it to the background we can use the command: ctrl+z, and to resume 
+     the processes, we use the bg command.

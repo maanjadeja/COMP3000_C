@@ -1,0 +1,301 @@
+COMP 3000
+Tutorial 1
+Maansinh Jadeja
+101157121
+________DUE DATE__________
+
+Q.1
+To get the name of the unix we enter the command "uname".
+To get the system information of the unix we type in "uname-a".
+To get the kernel name of environment we type in "uname-s".
+
+Q.2
+man which: 
+----------
+
+NAME
+       which - locate a command
+
+SYNOPSIS
+       which [-a] filename ...
+
+DESCRIPTION
+       which  returns  the pathnames of the files (or links) which would be executed in the current environment, had its arguments been given as commands in a strictly
+       POSIX-conformant shell.  It does this by searching the PATH for executable files matching the names of the arguments.  It does not canonicalize path names.
+
+OPTIONS
+       -a     print all matching pathnames of each argument
+
+EXIT STATUS
+       0      if all specified commands are found and executable
+
+       1      if one or more specified commands is nonexistent or not executable
+
+       2      if an invalid option is specified
+----------
+man pwd:
+PWD(1)                                                                       User Commands                                                                       PWD(1)
+
+NAME
+       pwd - print name of current/working directory
+
+SYNOPSIS
+       pwd [OPTION]...
+
+DESCRIPTION
+       Print the full filename of the current working directory.
+
+       -L, --logical
+              use PWD from environment, even if it contains symlinks
+
+       -P, --physical
+              avoid all symlinks
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+       If no option is specified, -P is assumed.
+
+       NOTE:  your  shell may have its own version of pwd, which usually supersedes the version described here.  Please refer to your shell's documentation for details
+       about the options it supports.
+
+AUTHOR
+       Written by Jim Meyering.
+
+REPORTING BUGS
+       GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+       Report any translation bugs to <https://translationproject.org/team/>
+
+COPYRIGHT
+       Copyright © 2020 Free Software Foundation, Inc.  License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+       This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+
+SEE ALSO
+       getcwd(3)
+
+       Full documentation <https://www.gnu.org/software/coreutils/pwd>
+       or available locally via: info '(coreutils) pwd invocation'
+
+GNU coreutils 8.32
+-------------
+man who:
+
+NAME
+       who - show who is logged on
+
+SYNOPSIS
+       who [OPTION]... [ FILE | ARG1 ARG2 ]
+
+DESCRIPTION
+       Print information about users who are currently logged in.
+
+       -a, --all
+              same as -b -d --login -p -r -t -T -u
+
+       -b, --boot
+              time of last system boot
+
+       -d, --dead
+              print dead processes
+
+       -H, --heading
+              print line of column headings
+
+       --ips  print ips instead of hostnames. with --lookup, canonicalizes based on stored IP, if available, rather than stored hostname
+
+       -l, --login
+              print system login processes
+
+       --lookup
+              attempt to canonicalize hostnames via DNS
+
+       -m     only hostname and user associated with stdin
+
+       -p, --process
+              print active processes spawned by init
+
+       -q, --count
+              all login names and number of users logged on
+
+       -r, --runlevel
+              print current runlevel
+
+       -s, --short
+              print only name, line, and time (default)
+--------------
+man whoami:
+WHOAMI(1)                                                                    User Commands                                                                    WHOAMI(1)
+
+NAME
+       whoami - print effective userid
+
+SYNOPSIS
+       whoami [OPTION]...
+
+DESCRIPTION
+       Print the user name associated with the current effective user ID.  Same as id -un.
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+AUTHOR
+       Written by Richard Mlynarik.
+
+REPORTING BUGS
+       GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+       Report any translation bugs to <https://translationproject.org/team/>
+
+COPYRIGHT
+       Copyright © 2020 Free Software Foundation, Inc.  License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+       This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+
+SEE ALSO
+       Full documentation <https://www.gnu.org/software/coreutils/whoami>
+       or available locally via: info '(coreutils) whoami invocation'
+
+GNU coreutils 8.32
+-----------------
+man whereis:
+
+WHEREIS(1)                                                                   User Commands                                                                   WHEREIS(1)
+
+NAME
+       whereis - locate the binary, source, and manual page files for a command
+
+SYNOPSIS
+       whereis [options] [-BMS directory... -f] name...
+
+DESCRIPTION
+       whereis locates the binary, source and manual files for the specified command names. The supplied names are first stripped of leading pathname components.
+       Prefixes of s. resulting from use of source code control are also dealt with. whereis then attempts to locate the desired program in the standard Linux places,
+       and in the places specified by $PATH and $MANPATH.
+
+       The search restrictions (options -b, -m and -s) are cumulative and apply to the subsequent name patterns on the command line. Any new search restriction resets
+       the search mask. For example,
+
+          whereis -bm ls tr -m gcc
+
+       searches for "ls" and "tr" binaries and man pages, and for "gcc" man pages only.
+
+       The options -B, -M and -S reset search paths for the subsequent name patterns. For example,
+
+          whereis -m ls -M /usr/share/man/man1 -f cal
+
+       searches for "ls" man pages in all default paths, but for "cal" in the /usr/share/man/man1 directory only.
+
+OPTIONS
+       -b
+           Search for binaries.
+
+       -m
+           Search for manuals.
+
+       -s
+           Search for sources.
+
+       -u
+           Only show the command names that have unusual entries. A command is said to be unusual if it does not have just one entry of each explicitly requested type.
+           Thus 'whereis -m -u *' asks for those files in the current directory which have no documentation file, or more than one.
+
+       -B list
+           Limit the places where whereis searches for binaries, by a whitespace-separated list of directories.
+
+       -M list
+           Limit the places where whereis searches for manuals and documentation in Info format, by a whitespace-separated list of directories.
+
+-----------------
+man whatis: 
+
+WHATIS(1)                                                                  Manual pager utils                                                                 WHATIS(1)
+
+NAME
+       whatis - display one-line manual page descriptions
+
+SYNOPSIS
+       whatis [-dlv?V] [-r|-w] [-s list] [-m system[,...]] [-M path] [-L locale] [-C file] name ...
+
+DESCRIPTION
+       Each  manual  page  has  a  short  description available within it.  whatis searches the manual page names and displays the manual page descriptions of any name
+       matched.
+
+       name may contain wildcards (-w) or be a regular expression (-r).  Using these options, it may be necessary to quote the name or escape (\) the  special  charac‐
+       ters to stop the shell from interpreting them.
+
+       index  databases  are  used during the search, and are updated by the mandb program.  Depending on your installation, this may be run by a periodic cron job, or
+       may need to be run manually after new manual pages have been installed.  To produce an old style text whatis database from the relative  index  database,  issue
+       the command:
+
+       whatis -M manpath -w '*' | sort > manpath/whatis
+
+       where manpath is a manual page hierarchy such as /usr/man.
+
+OPTIONS
+       -d, --debug
+              Print debugging information.
+
+       -v, --verbose
+              Print verbose warning messages.
+
+       -r, --regex
+              Interpret  each name as a regular expression.  If a name matches any part of a page name, a match will be made.  This option causes whatis to be somewhat
+              slower due to the nature of database searches.
+
+       -w, --wildcard
+              Interpret each name as a pattern containing shell style wildcards.  For a match to be made, an expanded name must match the entire page name.   This  op‐
+              tion causes whatis to be somewhat slower due to the nature of database searches.
+
+       -l, --long
+              Do  not  trim output to the terminal width.  Normally, output will be truncated to the terminal width to avoid ugly results from poorly-written NAME sec‐
+              tions.
+
+       -s list, --sections=list, --section=list
+              Search only the given manual sections.  list is a colon- or comma-separated list of sections.  If an entry in list is a simple section, for example  "3",
+              then the displayed list of descriptions will include pages in sections "3", "3perl", "3x", and so on; while if an entry in list has an extension, for ex‐
+-----------------
+
+Q.3 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+COMP 3000
+Tutorial 4
+Maansinh Jadeja
+101157121
+Feb 10th 2023
+
+
+Q.1 The reason why we are able to log in as the new user we created, in this case, user: someuser, password: someuser, is because when we created
+    the new user using the command: sudo adduser someuser, the new user gets created and placed into the root. Once the user is created we can run
+    the "cat /etc/passwd" command and see the new user: someuser present in the list, which perhaps allows 3000userlogin to allow someuser to log in
+    directly without a password.
+
+Q.2 The reason the colours are gone in 3000userlogin, is because the code does not specify and colouring of characters, which makes it be presented
+    in the default form. If we run the command "env" in the terminal, we see a environmental variable called "LS_COLORS". To change it we use the setenv
+    command: int setenv(const char *name, const char *value, int overwrite);. In this case: we can use setenv("LS_COLORS", 'di=0;34', 1);.
+
+Q.3 The type of variable getpwnam(username) is struct passwd as it is set to pw_entry which is a struct passwd. This getpwnam function returns a passwd
+    object. I expected this because we are setting the function call to a struct passwd, so the type of object is presented in the code.
+
+Q.4 The id details are like this for the first run: uid=1000, euid=1000, gid=1000, egid=1000. When we run the program with sudo we get:u
+    id=0, euid=0, gid=0, egid=0. This shows that when we run the program from the root, it does not have details for the ID's or hte userId's because
+    the root does not specify a particular user logging in. We were prompted to insert the password of student when we run "sudo ./3000userlogin student".
+
+Q.5 It changes it gid before the uid because in the code we have the "result = setgid(pw_entry->pw_gid);" code written before
+    "result = setuid(pw_entry->pw_uid);". If we switch the order, the output of the code remains the same:
+    "uid=1000, euid=1000, gid=1000, egid=1000
+     student@comp3000w23:~ $". However If we tr
+
+Q.6 Here we use the chsh -s command to allow us to specify the name of the user's new login shell.
+
+Q.7 In order to change the shell to a new default shell we have to use the chsh -s command where we can specify the new shell that the user will be assigned
+    to. You have to specify the directory path to the new shell after the -s parameter. The program does not seem to be having any trouble when we run it
+    with chsh.
+
+Q.8 It has to be an regular shell, as if it were to be an arbitrary program made, it could possibly cause some problems when trying to execute files or
+    navigate through directories. As in the previous tutorials, we mentioned that some terminals that are programmed can be missing some attributes from
+    the main terminal, for example, navigating through previous commands with the arrow keys, or finished a command we are typing with the tab key.
+
+Q.9 According to the program we are only calling the setenv() function to provide specific values for the environmental variables specified, however,
+    there may be more environmental variables set, they are just provided with default values. We know this because if we run env after successfully
+    logging in, we can see some environmental like: LESSCLOSE, that were not set in the code, however, have been provided values.
+
+Q.10 The reason why we don't use envp, is because it is already a keyword in the regular linux terminal, so we have to specify a new name. When we try to
+     change the name from environ to envp we get this output:
+     /usr/bin/ld: /tmp/ccAWy4Ui.o: warning: relocation against `envp' in read-only section `.text'
+     /usr/bin/ld: /tmp/ccAWy4Ui.o: in function `main':
+     3000userlogin.c:(.text+0x295): undefined reference to `envp'
+     /usr/bin/ld: warning: creating DT_TEXTREL in a PIE
+     collect2: error: ld returned 1 exit status
+
+     This shows that we cannot use envp as the keyword to present the environmental variables in 3000userlogin.
